@@ -18,12 +18,23 @@ class _HomePageState extends State<HomePage> {
     BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: ''),
   ];
 
+  List<Widget> _screens = <Widget>[
+    Container(color: Colors.amberAccent,),
+    Container(color: Colors.blueAccent,),
+    Container(color: Colors.purpleAccent,),
+    Container(color: Colors.cyanAccent,),
+    Container(color: Colors.orangeAccent,),
+  ];
+
   int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(color: Colors.amberAccent,),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _screens,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items:btmNavItems,
         selectedItemColor: Colors.black87,
