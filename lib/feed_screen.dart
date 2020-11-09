@@ -14,6 +14,12 @@ class FeedScreen extends StatelessWidget {
           ),
         ),
       ),
+      body: ListView.builder(itemBuilder: (BuildContext context, int index){
+        return Container(
+          color: Colors.accents[index % Colors.accents.length],
+          height: 100,
+        );
+      }, itemCount: 30,),
     );
   }
 }
