@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
           ),
-          child: Text('Edit Profile'),
+          child: Text('Edit Profile', style: TextStyle(fontWeight: FontWeight.bold),),
         ),
       ),
     );
