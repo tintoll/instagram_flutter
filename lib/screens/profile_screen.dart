@@ -11,10 +11,53 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _appbar(),
-              _username(),
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          _username(),
+                          _userBio(),
+                          _editProfilebtn(),
+                        ]
+                      ),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ));
+  }
+
+  Padding _editProfilebtn() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: common_gap),
+      child: SizedBox(
+        height: 24,
+        child: OutlineButton(
+          onPressed: () {},
+          borderSide: BorderSide(color: Colors.black45),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Text('Edit Profile'),
+        ),
+      ),
+    );
+  }
+
+  Widget _userBio() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: common_gap),
+      child: Text(
+        'this is What I belive !!',
+        style: TextStyle(
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
   }
 
   Widget _username() {
