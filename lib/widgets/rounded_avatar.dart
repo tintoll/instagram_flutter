@@ -6,7 +6,8 @@ class RoundedAvatar extends StatelessWidget {
   final double size;
 
   const RoundedAvatar({
-    Key key, this.size = avatar_size,
+    Key key,
+    this.size = avatar_size,
   }) : super(key: key);
 
   @override
@@ -15,7 +16,8 @@ class RoundedAvatar extends StatelessWidget {
       child: CachedNetworkImage(
         imageUrl: 'https://picsum.photos/100',
         width: size,
-        height: size,),
+        height: size,
+      ),
     );
   }
 }

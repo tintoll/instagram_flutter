@@ -21,10 +21,18 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _screens = <Widget>[
     FeedScreen(),
-    Container(color: Colors.blueAccent,),
-    Container(color: Colors.purpleAccent,),
-    Container(color: Colors.cyanAccent,),
-    Container(color: Colors.orangeAccent,),
+    Container(
+      color: Colors.blueAccent,
+    ),
+    Container(
+      color: Colors.purpleAccent,
+    ),
+    Container(
+      color: Colors.cyanAccent,
+    ),
+    Container(
+      color: Colors.orangeAccent,
+    ),
   ];
 
   int _selectedIndex = 0;
@@ -37,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items:btmNavItems,
+        items: btmNavItems,
         selectedItemColor: Colors.black87,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: false,

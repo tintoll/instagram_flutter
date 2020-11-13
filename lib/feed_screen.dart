@@ -7,20 +7,17 @@ class FeedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CupertinoNavigationBar(
-        leading: IconButton(
-          onPressed: null,
-          icon : Icon(
-            Icons.camera_alt,
-            color: Colors.black87,
-          )
-        ),
-        middle: Text(
+          leading: IconButton(
+              onPressed: null,
+              icon: Icon(
+                Icons.camera_alt,
+                color: Colors.black87,
+              )),
+          middle: Text(
             'instagram',
-            style: TextStyle(
-              fontFamily: 'VeganStyle'
-            ),
+            style: TextStyle(fontFamily: 'VeganStyle'),
           ),
-          trailing : Row(
+          trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               IconButton(
@@ -28,24 +25,21 @@ class FeedScreen extends StatelessWidget {
                     AssetImage('assets/images/actionbar_camera.png'),
                     color: Colors.black87,
                   ),
-                  onPressed: null
-              ),
+                  onPressed: null),
               IconButton(
                   icon: ImageIcon(
                     AssetImage('assets/images/actionbar_camera.png'),
                     color: Colors.black87,
                   ),
-                  onPressed: null
-              ),
+                  onPressed: null),
             ],
-          )
-        ),
-        
-      body: ListView.builder(itemBuilder: (BuildContext context, int index){
-        return Post(index);
-      }, itemCount: 30,),
+          )),
+      body: ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return Post(index);
+        },
+        itemCount: 30,
+      ),
     );
   }
 }
-
-
