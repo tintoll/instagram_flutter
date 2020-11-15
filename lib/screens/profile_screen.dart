@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_flutter/constants/common_size.dart';
+import 'package:instagram_flutter/widgets/profile_body.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -11,66 +11,13 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _appbar(),
-              Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          _username(),
-                          _userBio(),
-                          _editProfilebtn(),
-                        ]
-                      ),
-                    )
-                  ],
-                ),
-              )
+              ProfileBody()
             ],
           ),
         ));
   }
 
-  Padding _editProfilebtn() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: common_gap),
-      child: SizedBox(
-        height: 24,
-        child: OutlineButton(
-          onPressed: () {},
-          borderSide: BorderSide(color: Colors.black45),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Text('Edit Profile', style: TextStyle(fontWeight: FontWeight.bold),),
-        ),
-      ),
-    );
-  }
 
-  Widget _userBio() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: common_gap),
-      child: Text(
-        'this is What I belive !!',
-        style: TextStyle(
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    );
-  }
-
-  Widget _username() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: common_gap),
-      child: Text(
-        'username',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
 
   Row _appbar() {
     return Row(
