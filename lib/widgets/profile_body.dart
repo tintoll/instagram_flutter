@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
+import 'package:instagram_flutter/constants/screen_size.dart';
 
 class ProfileBody extends StatefulWidget {
   @override
@@ -19,40 +20,59 @@ class _ProfileBodyState extends State<ProfileBody> {
               _username(),
               _userBio(),
               _editProfilebtn(),
-              Row(
-                children: [
-                  Expanded(
-                    child: IconButton(
-                      icon: ImageIcon(
-                        AssetImage('assets/images/grid.png'),
-                        color: selectedLeft ? Colors.black : Colors.black26,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          selectedLeft = true;
-                        });
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: IconButton(
-                      icon: ImageIcon(
-                        AssetImage('assets/images/saved.png'),
-                        color: selectedLeft ? Colors.black26 : Colors.black,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          selectedLeft = false;
-                        });
-                      },
-                    ),
-                  )
-                ],
-              )
+              _tabButtons(),
+              _selectedIndicator()
             ]),
           )
         ],
       ),
+    );
+  }
+
+  AnimatedContainer _selectedIndicator() {
+    return AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              alignment:
+                  selectedLeft ? Alignment.centerLeft : Alignment.centerRight,
+              child: Container(
+                height: 3,
+                color: Colors.black87,
+                width: size.width / 2,
+              ),
+              curve: Curves.fastOutSlowIn,
+            );
+  }
+
+  Row _tabButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: IconButton(
+            icon: ImageIcon(
+              AssetImage('assets/images/grid.png'),
+              color: selectedLeft ? Colors.black : Colors.black26,
+            ),
+            onPressed: () {
+              setState(() {
+                selectedLeft = true;
+              });
+            },
+          ),
+        ),
+        Expanded(
+          child: IconButton(
+            icon: ImageIcon(
+              AssetImage('assets/images/saved.png'),
+              color: selectedLeft ? Colors.black26 : Colors.black,
+            ),
+            onPressed: () {
+              setState(() {
+                selectedLeft = false;
+              });
+            },
+          ),
+        )
+      ],
     );
   }
 

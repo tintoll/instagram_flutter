@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
+import 'package:instagram_flutter/constants/screen_size.dart';
 import 'package:instagram_flutter/widgets/comment.dart';
 import 'package:instagram_flutter/widgets/my_progress_indicator.dart';
 import 'package:instagram_flutter/widgets/rounded_avatar.dart';
 
 class Post extends StatelessWidget {
   final int index;
-  Size size;
 
   Post(
     this.index, {
@@ -16,7 +16,6 @@ class Post extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (size == null) size = MediaQuery.of(context).size;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
