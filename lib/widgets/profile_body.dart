@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
 import 'package:instagram_flutter/constants/screen_size.dart';
@@ -23,6 +24,20 @@ class _ProfileBodyState extends State<ProfileBody> {
               _tabButtons(),
               _selectedIndicator()
             ]),
+          ),
+          SliverToBoxAdapter(
+            child: GridView.count(
+              crossAxisCount: 3,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: List.generate(
+                  30,
+                      (index) =>
+                      CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: 'https://picsum.photos/id/$index/1000/1000',
+                      )),
+            ),
           )
         ],
       ),
