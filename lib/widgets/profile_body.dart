@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
 import 'package:instagram_flutter/constants/screen_size.dart';
+import 'package:instagram_flutter/widgets/rounded_avatar.dart';
 
 class ProfileBody extends StatefulWidget {
   @override
@@ -20,6 +21,39 @@ class _ProfileBodyState extends State<ProfileBody> {
         slivers: [
           SliverList(
             delegate: SliverChildListDelegate([
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(common_gap),
+                    child: RoundedAvatar(
+                      size: 80,
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: common_gap),
+                      child: Table(
+                        children: [
+                          TableRow(
+                            children: [
+                              _valueText('1231231'),
+                              _valueText('546546'),
+                              _valueText('77368674'),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              _labelText('Posts'),
+                              _labelText('Followers'),
+                              _labelText('Following'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
               _username(),
               _userBio(),
               _editProfilebtn(),
@@ -32,6 +66,21 @@ class _ProfileBodyState extends State<ProfileBody> {
       ),
     );
   }
+
+  Text _valueText(value) => Text(
+        value,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      );
+
+  Text _labelText(label) => Text(
+        label,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontWeight: FontWeight.w300,
+          fontSize: 11,
+        ),
+      );
 
   SliverToBoxAdapter _imagesPager() {
     return SliverToBoxAdapter(
@@ -119,7 +168,7 @@ class _ProfileBodyState extends State<ProfileBody> {
 
   _tabSelected(SelectedTab selectedTab) {
     setState(() {
-      switch(selectedTab) {
+      switch (selectedTab) {
         case SelectedTab.left:
           _selectedTab = SelectedTab.left;
           _leftImagesPageMargin = 0;
