@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/screen_size.dart';
 import 'package:instagram_flutter/widgets/profile_body.dart';
+import 'package:instagram_flutter/widgets/profile_side_menu.dart';
+
+
+const duration = Duration(milliseconds: 1000);
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -8,8 +12,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final menuWidth = size.width / 2;
-  final duration = Duration(milliseconds: 300);
+  final menuWidth = size.width / 3 * 2;
 
   MenuStatus _menuStatus = MenuStatus.closed;
   double bodyXPos = 0;
@@ -51,9 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: menuWidth,
                 top: 0,
                 bottom: 0,
-                child: Container(
-                  color: Colors.purpleAccent,
-                )),
+                child:ProfileSideMenu(menuWidth)),
           ),
         ],
       ),
