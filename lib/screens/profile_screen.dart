@@ -50,11 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             duration: duration,
             transform: Matrix4.translationValues(menuXPos, 0, 0),
             curve: Curves.fastOutSlowIn,
-            child: Positioned(
-                width: menuWidth,
-                top: 0,
-                bottom: 0,
-                child:ProfileSideMenu(menuWidth)),
+            child: ProfileSideMenu(menuWidth),
           ),
         ],
       ),
