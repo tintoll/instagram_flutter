@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_flutter/screens/profile_screen.dart';
-import 'package:instagram_flutter/widgets/sign_up_form.dart';
-import 'package:instagram_flutter/widgets/sing_in_form.dart';
+import 'package:instagram_flutter/widgets/fade_stack.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -9,16 +7,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  Widget signInForm = SignInForm();
-  Widget signUpForm = SignUpForm();
-
-  Widget currentWidget;
-
-  @override
-  void initState() {
-    if (currentWidget == null) currentWidget = signUpForm;
-    super.initState();
-  }
+  int selectedForm = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +15,17 @@ class _AuthScreenState extends State<AuthScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            AnimatedSwitcher(
-              duration: duration,
-              child: currentWidget,
+            FadeStack(
+              selectedForm: selectedForm,
             ),
             Container(
               child: FlatButton(
                 onPressed: () {
                   setState(() {
-                    if(currentWidget is SignUpForm) {
-                      currentWidget = signInForm;
+                    if (selectedForm == 0) {
+                      selectedForm = 1;
                     } else {
-                      currentWidget = signUpForm;
+                      selectedForm = 0;
                     }
                   });
                 },
