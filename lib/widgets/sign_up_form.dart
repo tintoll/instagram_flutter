@@ -34,6 +34,7 @@ class _SignUpFormState extends State<SignUpForm> {
             Image.asset('assets/images/insta_text_logo.png'),
             TextFormField(
               controller: _editingController,
+              cursorColor: Colors.black54,
               decoration: _texInputDecor("Email"),
               validator: (text) {
                 if (text.isNotEmpty && text.contains('@')) {
@@ -48,6 +49,8 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             TextFormField(
               controller: _pwController,
+              obscureText: true,
+              cursorColor: Colors.black54,
               decoration: _texInputDecor("Password"),
               validator: (text) {
                 if (text.isNotEmpty && text.length > 5) {
@@ -62,6 +65,8 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             TextFormField(
               controller: _cpwController,
+              obscureText: true,
+              cursorColor: Colors.black54,
               decoration: _texInputDecor("Confirm Password"),
               validator: (text) {
                 if (text.isNotEmpty && _pwController.text == text) {
@@ -74,6 +79,21 @@ class _SignUpFormState extends State<SignUpForm> {
             SizedBox(
               height: common_s_gap,
             ),
+            FlatButton(
+              onPressed: () {
+                if(_formKey.currentState.validate()) {
+                  print('validator success');
+                }
+              },
+              color: Colors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                'Join',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
           ],
         ),
       ),
@@ -84,6 +104,18 @@ class _SignUpFormState extends State<SignUpForm> {
     return InputDecoration(
         hintText: hint,
         enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.grey[300],
+          ),
+          borderRadius: BorderRadius.circular(common_s_gap),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.redAccent,
+          ),
+          borderRadius: BorderRadius.circular(common_s_gap),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.grey[300],
           ),
