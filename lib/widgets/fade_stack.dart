@@ -12,7 +12,7 @@ class FadeStack extends StatefulWidget {
 }
 
 class _FadeStackState extends State<FadeStack> with SingleTickerProviderStateMixin  {
-  List<Widget> forms = [SignInForm(),  SignUpForm()];
+  List<Widget> forms = [SignUpForm(),  SignInForm()];
 
   AnimationController _animationController;
 
