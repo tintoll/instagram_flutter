@@ -100,6 +100,33 @@ class _SignUpFormState extends State<SignUpForm> {
                   'Join',
                   style: TextStyle(color: Colors.white),
                 ),
+              ),
+              SizedBox(
+                height: common_s_gap,
+              ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    height: 2,
+                    child: Container(
+                      color: Colors.grey[300],
+                      height: 2,
+                    ),
+                  ),
+                  Container(
+                    color: Colors.grey[50],
+                    height: 3,
+                    width: 60,
+                  ),
+                  Text(
+                    'OR',
+                    style: TextStyle(
+                        color: Colors.grey[500], fontWeight: FontWeight.bold),
+                  )
+                ],
               )
             ],
           ),
