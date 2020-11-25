@@ -10,8 +10,9 @@ class _AuthScreenState extends State<AuthScreen> {
   int selectedForm = 0;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext  context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [
