@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
+import 'package:instagram_flutter/home_page.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -83,8 +84,12 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               FlatButton(
                 onPressed: () {
-                  if(_formKey.currentState.validate()) {
-                    print('validator success');
+                  if (_formKey.currentState.validate()) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
+                    );
                   }
                 },
                 color: Colors.blue,
@@ -116,19 +121,19 @@ class _SignUpFormState extends State<SignUpForm> {
 
   OutlineInputBorder _errorInputBorder() {
     return OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.redAccent,
-        ),
-        borderRadius: BorderRadius.circular(common_s_gap),
-      );
+      borderSide: BorderSide(
+        color: Colors.redAccent,
+      ),
+      borderRadius: BorderRadius.circular(common_s_gap),
+    );
   }
 
   OutlineInputBorder _activeInputBorder() {
     return OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.grey[300],
-        ),
-        borderRadius: BorderRadius.circular(common_s_gap),
-      );
+      borderSide: BorderSide(
+        color: Colors.grey[300],
+      ),
+      borderRadius: BorderRadius.circular(common_s_gap),
+    );
   }
 }
