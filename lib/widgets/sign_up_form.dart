@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_flutter/constants/auth_input_decor.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
 import 'package:instagram_flutter/home_page.dart';
+import 'package:instagram_flutter/widgets/or_divider.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -38,7 +40,7 @@ class _SignUpFormState extends State<SignUpForm> {
               TextFormField(
                 controller: _editingController,
                 cursorColor: Colors.black54,
-                decoration: _texInputDecor("Email"),
+                decoration: texInputDecor("Email"),
                 validator: (text) {
                   if (text.isNotEmpty && text.contains('@')) {
                     return null;
@@ -54,7 +56,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 controller: _pwController,
                 obscureText: true,
                 cursorColor: Colors.black54,
-                decoration: _texInputDecor("Password"),
+                decoration: texInputDecor("Password"),
                 validator: (text) {
                   if (text.isNotEmpty && text.length > 5) {
                     return null;
@@ -70,7 +72,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 controller: _cpwController,
                 obscureText: true,
                 cursorColor: Colors.black54,
-                decoration: _texInputDecor("Confirm Password"),
+                decoration: texInputDecor("Confirm Password"),
                 validator: (text) {
                   if (text.isNotEmpty && _pwController.text == text) {
                     return null;
@@ -86,7 +88,7 @@ class _SignUpFormState extends State<SignUpForm> {
               SizedBox(
                 height: common_s_gap,
               ),
-              _orDivider(),
+              OrDivider(),
               FlatButton.icon(
                 onPressed: () {},
                 textColor: Colors.blue,
@@ -119,62 +121,6 @@ class _SignUpFormState extends State<SignUpForm> {
         'Join',
         style: TextStyle(color: Colors.white),
       ),
-    );
-  }
-
-  Stack _orDivider() {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Positioned(
-          left: 0,
-          right: 0,
-          height: 2,
-          child: Container(
-            color: Colors.grey[300],
-            height: 2,
-          ),
-        ),
-        Container(
-          color: Colors.grey[50],
-          height: 3,
-          width: 60,
-        ),
-        Text(
-          'OR',
-          style:
-              TextStyle(color: Colors.grey[500], fontWeight: FontWeight.bold),
-        )
-      ],
-    );
-  }
-
-  InputDecoration _texInputDecor(hint) {
-    return InputDecoration(
-        hintText: hint,
-        enabledBorder: _activeInputBorder(),
-        focusedBorder: _activeInputBorder(),
-        errorBorder: _errorInputBorder(),
-        focusedErrorBorder: _errorInputBorder(),
-        filled: true,
-        fillColor: Colors.grey[100]);
-  }
-
-  OutlineInputBorder _errorInputBorder() {
-    return OutlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.redAccent,
-      ),
-      borderRadius: BorderRadius.circular(common_s_gap),
-    );
-  }
-
-  OutlineInputBorder _activeInputBorder() {
-    return OutlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.grey[300],
-      ),
-      borderRadius: BorderRadius.circular(common_s_gap),
     );
   }
 }
