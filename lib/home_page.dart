@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/screen_size.dart';
+import 'package:instagram_flutter/screens/camera_screen.dart';
 import 'file:///C:/Users/tintoll/AndroidStudioProjects/instagram_flutter/lib/screens/feed_screen.dart';
 import 'package:instagram_flutter/screens/profile_screen.dart';
 
@@ -60,9 +61,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onBtmItemClick(int index) {
-    print(index);
-    setState(() {
-      _selectedIndex = index;
-    });
+    switch (index) {
+      case 2:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => CameraScreen()));
+        break;
+      default:
+        {
+          print(index);
+          setState(() {
+            _selectedIndex = index;
+          });
+        }
+    }
   }
 }
