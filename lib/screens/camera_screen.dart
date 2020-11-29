@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_flutter/widgets/take_photo.dart';
 
 class CameraScreen extends StatefulWidget {
   @override
@@ -28,9 +29,7 @@ class _CameraScreenState extends State<CameraScreen> {
           Container(
             color: Colors.cyanAccent,
           ),
-          Container(
-            color: Colors.redAccent,
-          ),
+          TakePhoto(),
           Container(
             color: Colors.greenAccent,
           ),
@@ -85,3 +84,4 @@ class _CameraScreenState extends State<CameraScreen> {
     });
   }
 }
+
