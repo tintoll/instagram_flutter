@@ -40,12 +40,15 @@ class _HomePageState extends State<HomePage> {
 
   int _selectedIndex = 0;
 
+  GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     // 초기화
     if (size == null) size = MediaQuery.of(context).size;
 
     return Scaffold(
+      key: _key,
       body: IndexedStack(
         index: _selectedIndex,
         children: _screens,
@@ -86,12 +89,12 @@ class _HomePageState extends State<HomePage> {
         content: Text("카메라, 마이크 권한을 허용해주세요"),
         action: SnackBarAction(
           onPressed: () {
-            Scaffold.of(context).hideCurrentSnackBar();
+            _key.currentState.hideCurrentSnackBar();
           },
           label: 'OK',
         ),
       );
-      Scaffold.of(context).showSnackBar(snackBar);
+      _key.currentState.showSnackBar(snackBar);
     }
   }
 
