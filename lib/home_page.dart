@@ -1,4 +1,5 @@
 
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/screen_size.dart';
 import 'package:instagram_flutter/screens/camera_screen.dart';
@@ -90,6 +91,7 @@ class _HomePageState extends State<HomePage> {
         action: SnackBarAction(
           onPressed: () {
             _key.currentState.hideCurrentSnackBar();
+            AppSettings.openAppSettings();
           },
           label: 'OK',
         ),
