@@ -3,7 +3,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/screen_size.dart';
 import 'package:instagram_flutter/screens/camera_screen.dart';
-import 'file:///C:/Users/tintoll/AndroidStudioProjects/instagram_flutter/lib/screens/feed_screen.dart';
+import 'package:instagram_flutter/screens/feed_screen.dart';
 import 'package:instagram_flutter/screens/profile_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 

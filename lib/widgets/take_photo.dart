@@ -28,7 +28,8 @@ class _TakePhotoState extends State<TakePhoto> {
                 width: size.width,
                 height: size.width,
                 color: Colors.black,
-                child: (snapshot.hasData) ? _getPreview(snapshot.data) : _progress,
+                child:
+                    (snapshot.hasData) ? _getPreview(snapshot.data) : _progress,
               ),
               Expanded(
                 child: Padding(
@@ -51,7 +52,18 @@ class _TakePhotoState extends State<TakePhoto> {
       future: _controller.initialize(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return CameraPreview(_controller);
+          return ClipRect(
+            child: OverflowBox(
+              alignment: Alignment.center,
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Container(
+                    width: size.width,
+                    height: size.width / _controller.value.aspectRatio,
+                    child: CameraPreview(_controller)),
+              ),
+            ),
+          );
         } else {
           return _progress;
         }
