@@ -68,10 +68,10 @@ class _TakePhotoState extends State<TakePhoto> {
   }
 
   void _attemptTakePhoto(CameraState cameraState) async {
-    final timeMilli = DateTime.now().microsecondsSinceEpoch.toString();
+    final timeInMilli = DateTime.now().microsecondsSinceEpoch.toString();
 
     try {
-      final path = join( (await getTemporaryDirectory()).path, timeMilli);
+      final path = join( (await getTemporaryDirectory()).path, '$timeInMilli.png');
       await cameraState.controller.takePicture(path);
     } catch (e) {}
   }
