@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
@@ -102,8 +103,11 @@ class _HomePageState extends State<HomePage> {
 
   // 카메라 및 마이크 권한을 확인 한다.
   Future<bool> checkIfPermissionGranted(BuildContext context) async {
-    Map<Permission, PermissionStatus> statuses =
-        await [Permission.camera, Permission.microphone].request();
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.camera,
+      Permission.microphone,
+      Platform.isIOS ? Permission.photos : Permission.storage,
+    ].request();
 
     bool permitted = true;
     statuses.forEach((permission, permissionStatus) {
