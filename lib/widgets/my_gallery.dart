@@ -32,20 +32,24 @@ class _MyGalleryState extends State<MyGallery> {
         .map(
           (localImage) => InkWell(
               onTap: () async {
-
                 // localImage를 바로 File 만들수 없기 때문에 byte로 변경했다가 File로 만들어준다.
-                Uint8List bytes = await localImage.getScaledImageBytes(galleryState.localImageProvider, 0.3);
+                Uint8List bytes = await localImage.getScaledImageBytes(
+                    galleryState.localImageProvider, 0.3);
 
-                final timeInMilli = DateTime.now().microsecondsSinceEpoch.toString();
+                final timeInMilli =
+                    DateTime.now().microsecondsSinceEpoch.toString();
                 try {
-                  final path =
-                  join((await getTemporaryDirectory()).path, '$timeInMilli.png');
+                  final path = join(
+                      (await getTemporaryDirectory()).path, '$timeInMilli.png');
                   File imageFile = File(path)..writeAsBytesSync(bytes);
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (_) => SharePostScreen(imageFile)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => SharePostScreen(imageFile)));
                 } catch (e) {}
-
-              }, child: Image(image: DeviceImage(localImage))),
+              },
+              child: Image(
+                image: DeviceImage(localImage, scale: 0.1),
+                fit: BoxFit.cover,
+              )),
         )
         .toList();
   }
