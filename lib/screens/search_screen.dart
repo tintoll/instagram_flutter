@@ -7,12 +7,20 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+
+  List<bool> followings = List.generate(30, (index) => false);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: ListView.separated(
       itemBuilder: (context, index) {
         return ListTile(
+          onTap: () {
+            setState(() {
+              followings[index] = !followings[index];
+            });
+          },
           leading: RoundedAvatar(),
           title: Text('username $index'),
           subtitle: Text('user bio number $index'),
@@ -21,8 +29,8 @@ class _SearchScreenState extends State<SearchScreen> {
             width: 80,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: Colors.red[50],
-                border: Border.all(color: Colors.red, width: 0.5),
+                color: followings[index] ? Colors.red[50] : Colors.blue[50],
+                border: Border.all(color: followings[index] ? Colors.red : Colors.blue, width: 0.5),
                 borderRadius: BorderRadius.circular(8)),
             child: Text(
               'following',
@@ -38,7 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
           height: 1,
         );
       },
-      itemCount: 30,
+      itemCount: followings.length,
     ));
   }
 }
