@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/auth_input_decor.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
 import 'package:instagram_flutter/home_page.dart';
+import 'package:instagram_flutter/models/firebase_auth_state.dart';
 import 'package:instagram_flutter/widgets/or_divider.dart';
+import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -82,7 +84,10 @@ class _SignInFormState extends State<SignInForm> {
               ),
               OrDivider(),
               FlatButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Provider.of<FirebaseAuthState>(context, listen: false)
+                      .changeFirebaseStatus(FirebaseAuthStatus.signin);
+                },
                 textColor: Colors.blue,
                 icon: ImageIcon(AssetImage('assets/images/facebook.png')),
                 label: Text("Login with Facebook"),
@@ -98,11 +103,13 @@ class _SignInFormState extends State<SignInForm> {
     return FlatButton(
       onPressed: () {
         if (_formKey.currentState.validate()) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => HomePage(),
-            ),
-          );
+          // Navigator.of(context).pushReplacement(
+          //   MaterialPageRoute(
+          //     builder: (context) => HomePage(),
+          //   ),
+          // );
+          Provider.of<FirebaseAuthState>(context, listen: false)
+              .changeFirebaseStatus(FirebaseAuthStatus.signin);
         }
       },
       color: Colors.blue,
