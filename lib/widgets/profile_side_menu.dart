@@ -26,12 +26,7 @@ class ProfileSideMenu extends StatelessWidget {
             ),
             ListTile(
               onTap: () {
-                // Navigator.of(context).pushReplacement(
-                //   MaterialPageRoute(
-                //     builder: (context) => AuthScreen(),
-                //   ),
-                // );
-                Provider.of<FirebaseAuthState>(context, listen: false).changeFirebaseStatus(FirebaseAuthStatus.signout);
+                Provider.of<FirebaseAuthState>(context, listen: false).signOut();
               },
               leading: Icon(
                 Icons.exit_to_app,
