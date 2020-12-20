@@ -13,12 +13,12 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _editingController = new TextEditingController();
+  TextEditingController _emailController = new TextEditingController();
   TextEditingController _pwController = new TextEditingController();
 
   @override
   void dispose() {
-    _editingController.dispose();
+    _emailController.dispose();
     _pwController.dispose();
     super.dispose();
   }
@@ -38,7 +38,7 @@ class _SignInFormState extends State<SignInForm> {
               ),
               Image.asset('assets/images/insta_text_logo.png'),
               TextFormField(
-                controller: _editingController,
+                controller: _emailController,
                 cursorColor: Colors.black54,
                 decoration: texInputDecor("Email"),
                 validator: (text) {
@@ -103,13 +103,8 @@ class _SignInFormState extends State<SignInForm> {
     return FlatButton(
       onPressed: () {
         if (_formKey.currentState.validate()) {
-          // Navigator.of(context).pushReplacement(
-          //   MaterialPageRoute(
-          //     builder: (context) => HomePage(),
-          //   ),
-          // );
           Provider.of<FirebaseAuthState>(context, listen: false)
-              .changeFirebaseStatus(FirebaseAuthStatus.signin);
+              .login(email: _emailController.text, password: _pwController.text);
         }
       },
       color: Colors.blue,
