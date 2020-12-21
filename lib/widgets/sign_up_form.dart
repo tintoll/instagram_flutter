@@ -112,7 +112,7 @@ class _SignUpFormState extends State<SignUpForm> {
       onPressed: () {
         if (_formKey.currentState.validate()) {
           Provider.of<FirebaseAuthState>(context, listen: false)
-              .registerUser(email: _emailController.text, password: _pwController.text);
+              .registerUser(context, email: _emailController.text.trim(), password: _pwController.text.trim());
         }
       },
       color: Colors.blue,

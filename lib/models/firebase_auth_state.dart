@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class FirebaseAuthState extends ChangeNotifier {
   FirebaseAuthStatus _firebaseAuthStatus = FirebaseAuthStatus.signout;
@@ -17,8 +18,28 @@ class FirebaseAuthState extends ChangeNotifier {
     });
   }
 
-  void registerUser({@required String email, @required String password}) {
-    _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+  void registerUser(BuildContext context, {@required String email, @required String password}) {
+    _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password)
+        .catchError((error) {
+         print(error.code);
+         String _message = "";
+         switch(error.code) {
+           case "email-already-in-use" :
+             _message = error.message;
+             break;
+           case "invalid-email" :
+             _message = error.message;
+             break;
+           case "operation-not-allowed" :
+             _message = error.message;
+             break;
+           case "weak-password" :
+             _message = error.message;
+             break;
+         }
+         SnackBar snackBar = SnackBar(content: Text(_message));
+         return Scaffold.of(context).showSnackBar(snackBar);
+    });
   }
   void login({@required String email, @required String password}) {
     _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
