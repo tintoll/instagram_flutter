@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">flutter_insta</string>
-    <string name="facebook_app_id">211984577248009</string>
-    <string name="fb_login_protocol_scheme">fb211984577248009</string>
+    <string name="facebook_app_id">855042108661127</string>
+    <string name="fb_login_protocol_scheme">fb855042108661127</string>
 </resources>
