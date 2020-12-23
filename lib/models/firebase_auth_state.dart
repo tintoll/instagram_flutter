@@ -5,14 +5,19 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:instagram_flutter/utils/simple_snackbar.dart';
 
 class FirebaseAuthState extends ChangeNotifier {
-  FirebaseAuthStatus _firebaseAuthStatus = FirebaseAuthStatus.signout;
+  FirebaseAuthStatus _firebaseAuthStatus = FirebaseAuthStatus.progress;
   User _firebaseUser;
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FacebookLogin _facebookLogin;
+  bool initiated = false;
 
   void watchAuthChange() {
     _firebaseAuth.authStateChanges().listen((user) {
       if (user == null && _firebaseUser == null) {
+        if (initiated)
+          changeFirebaseStatus();
+        else
+          initiated = true;
         return;
       } else if (user != _firebaseUser) {
         _firebaseUser = user;
@@ -23,6 +28,7 @@ class FirebaseAuthState extends ChangeNotifier {
 
   void registerUser(BuildContext context,
       {@required String email, @required String password}) {
+    changeFirebaseStatus(FirebaseAuthStatus.progress);
     _firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password)
         .catchError((error) {
@@ -49,6 +55,7 @@ class FirebaseAuthState extends ChangeNotifier {
 
   void login(BuildContext context,
       {@required String email, @required String password}) {
+    changeFirebaseStatus(FirebaseAuthStatus.progress);
     _firebaseAuth
         .signInWithEmailAndPassword(
             email: email.trim(), password: password.trim())
@@ -75,6 +82,7 @@ class FirebaseAuthState extends ChangeNotifier {
   }
 
   void signOut() async {
+    changeFirebaseStatus(FirebaseAuthStatus.progress);
     _firebaseAuthStatus = FirebaseAuthStatus.signout;
     if (_firebaseUser != null) {
       _firebaseUser = null;
@@ -98,6 +106,7 @@ class FirebaseAuthState extends ChangeNotifier {
   }
 
   void loginWithFacebook(BuildContext context) async {
+    changeFirebaseStatus(FirebaseAuthStatus.progress);
     if (_facebookLogin == null) _facebookLogin = FacebookLogin();
     FacebookLoginResult result = await _facebookLogin.logIn(['email']);
     switch (result.status) {
