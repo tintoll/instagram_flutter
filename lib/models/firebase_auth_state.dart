@@ -8,6 +8,7 @@ class FirebaseAuthState extends ChangeNotifier {
   FirebaseAuthStatus _firebaseAuthStatus = FirebaseAuthStatus.signout;
   User _firebaseUser;
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  FacebookLogin _facebookLogin;
 
   void watchAuthChange() {
     _firebaseAuth.authStateChanges().listen((user) {
@@ -73,11 +74,12 @@ class FirebaseAuthState extends ChangeNotifier {
     });
   }
 
-  void signOut() {
+  void signOut() async {
     _firebaseAuthStatus = FirebaseAuthStatus.signout;
     if (_firebaseUser != null) {
       _firebaseUser = null;
-      _firebaseAuth.signOut();
+      await _firebaseAuth.signOut();
+      if (await _facebookLogin.isLoggedIn) await _facebookLogin.logOut();
     }
     notifyListeners();
   }
@@ -96,8 +98,8 @@ class FirebaseAuthState extends ChangeNotifier {
   }
 
   void loginWithFacebook(BuildContext context) async {
-    final facebookLogin = FacebookLogin();
-    FacebookLoginResult result = await facebookLogin.logIn(['email']);
+    if (_facebookLogin == null) _facebookLogin = FacebookLogin();
+    FacebookLoginResult result = await _facebookLogin.logIn(['email']);
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         _handleFacebookTokenWithFirebase(context, result.accessToken.token);
@@ -107,7 +109,7 @@ class FirebaseAuthState extends ChangeNotifier {
         break;
       case FacebookLoginStatus.error:
         simpleSnackbar(context, 'error');
-        facebookLogin.logOut();
+        _facebookLogin.logOut();
         break;
     }
   }
