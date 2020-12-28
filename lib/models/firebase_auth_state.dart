@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:instagram_flutter/repo/user_network_repository.dart';
 import 'package:instagram_flutter/utils/simple_snackbar.dart';
 
 class FirebaseAuthState extends ChangeNotifier {
@@ -27,9 +28,9 @@ class FirebaseAuthState extends ChangeNotifier {
   }
 
   void registerUser(BuildContext context,
-      {@required String email, @required String password}) {
+      {@required String email, @required String password}) async {
     changeFirebaseStatus(FirebaseAuthStatus.progress);
-    _firebaseAuth
+    UserCredential userCredential = await _firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password)
         .catchError((error) {
       String _message = "";
@@ -49,8 +50,16 @@ class FirebaseAuthState extends ChangeNotifier {
       }
       SnackBar snackBar = SnackBar(content: Text(_message));
       // Scaffold 아래 있는 context를 가져와야된다.
-      return Scaffold.of(context).showSnackBar(snackBar);
+      Scaffold.of(context).showSnackBar(snackBar);
     });
+
+    User user = userCredential.user;
+    if(user == null) {
+      SnackBar snackBar = SnackBar(content: Text("Please try again later!"));
+      Scaffold.of(context).showSnackBar(snackBar);
+    } else {
+      await userNetworkRepository.attemptCreateUser(userKey: user.uid, email: user.email);
+    }
   }
 
   void login(BuildContext context,

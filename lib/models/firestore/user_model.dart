@@ -22,5 +22,18 @@ class UserModel {
         myPosts = map[KEY_MYPOSTS];
 
   UserModel.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), snapshot.id, reference : snapshot.reference);
+      : this.fromMap(snapshot.data(), snapshot.id,
+            reference: snapshot.reference);
+
+  static Map<String, dynamic> getMapForCreateUser(String email) {
+    Map<String, dynamic> map = Map();
+    map[KEY_PROFILEIMG] = "";
+    map[KEY_USERNMAE] = email.split("@")[0];
+    map[KEY_EMAIL] = email;
+    map[KEY_LIKEDPOSTS] = [];
+    map[KEY_FOLLOWERS] = 0;
+    map[KEY_FOLLOWINGS] = [];
+    map[KEY_MYPOSTS] = [];
+    return map;
+  }
 }
