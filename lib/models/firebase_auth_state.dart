@@ -63,9 +63,9 @@ class FirebaseAuthState extends ChangeNotifier {
   }
 
   void login(BuildContext context,
-      {@required String email, @required String password}) {
+      {@required String email, @required String password}) async {
     changeFirebaseStatus(FirebaseAuthStatus.progress);
-    _firebaseAuth
+    UserCredential userCredential = await _firebaseAuth
         .signInWithEmailAndPassword(
             email: email.trim(), password: password.trim())
         .catchError((error) {
@@ -88,6 +88,12 @@ class FirebaseAuthState extends ChangeNotifier {
       // Scaffold 아래 있는 context를 가져와야된다.
       return Scaffold.of(context).showSnackBar(snackBar);
     });
+
+    _firebaseUser = userCredential.user;
+    if(_firebaseUser == null) {
+      SnackBar snackBar = SnackBar(content: Text("Please try again later!"));
+      Scaffold.of(context).showSnackBar(snackBar);
+    }
   }
 
   void signOut() async {
