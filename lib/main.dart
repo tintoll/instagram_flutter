@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/material_white.dart';
 import 'package:instagram_flutter/home_page.dart';
 import 'package:instagram_flutter/models/firebase_auth_state.dart';
+import 'package:instagram_flutter/models/user_model_state.dart';
+import 'package:instagram_flutter/repo/user_network_repository.dart';
 import 'package:instagram_flutter/screens/auth_screen.dart';
 import 'package:instagram_flutter/widgets/my_progress_indicator.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +24,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _firebaseAuthState.watchAuthChange();
-    return ChangeNotifierProvider<FirebaseAuthState>.value(
-      value: _firebaseAuthState,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<FirebaseAuthState>.value(
+            value: _firebaseAuthState),
+        ChangeNotifierProvider<UserModelState>(
+          create: (_) => UserModelState(),
+        ),
+      ],
       child: MaterialApp(
         home: Consumer<FirebaseAuthState>(
           builder: (BuildContext context, FirebaseAuthState firebaseAuthState,
@@ -33,6 +41,10 @@ class MyApp extends StatelessWidget {
                 _currentWidget = AuthScreen();
                 break;
               case FirebaseAuthStatus.signin:
+                userNetworkRepository.getUserModelStream(firebaseAuthState.firebaseUser.uid).listen((userModel) {
+                  // listen false 해줘야 된다. 변화감지를 안하고 그냥 데이터만 가져오기 때문에
+                  Provider.of<UserModelState>(context, listen: false).userModel = userModel;
+                });
                 _currentWidget = HomePage();
                 break;
               default:
