@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:instagram_flutter/constants/common_size.dart';
+import 'package:instagram_flutter/constants/screen_size.dart';
 
 class SharePostScreen extends StatelessWidget {
   final File imageFile;
@@ -27,6 +29,23 @@ class SharePostScreen extends StatelessWidget {
                 ))
           ],
         ),
-        body: Image.file(imageFile));
+        body: ListView(
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                  vertical: common_gap, horizontal: common_gap),
+              leading: Image.file(
+                imageFile,
+                width: size.width / 6,
+                height: size.width / 6,
+                fit: BoxFit.cover,
+              ),
+              title: TextField(
+                decoration: InputDecoration(
+                    hintText: "Write a caption...", border: InputBorder.none),
+              ),
+            ),
+          ],
+        ));
   }
 }
