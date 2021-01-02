@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
@@ -49,22 +50,32 @@ class SharePostScreen extends StatelessWidget {
             _sectionButton('Tag People'),
             _divider,
             _sectionButton('Add Location'),
-            Tags(
-              horizontalScroll: true,
-              itemCount: _tagItems.length,
-              heightHorizontalScroll: 30,
-              itemBuilder: (index) => ItemTags(
-                index: index,
-                title: _tagItems[index],
-                activeColor: Colors.grey[200],
-                textActiveColor: Colors.black87,
-                borderRadius: BorderRadius.circular(4),
-                elevation: 2,
-                color: Colors.green,
-              ),
-            )
+            _tags(),
+            SizedBox(height: common_s_gap,),
+            _divider,
+            SectionSwitch('Facebook'),
+            SectionSwitch('Instagrams'),
+            SectionSwitch('Tumbler'),
+            _divider,
           ],
         ));
+  }
+
+  Tags _tags() {
+    return Tags(
+      horizontalScroll: true,
+      itemCount: _tagItems.length,
+      heightHorizontalScroll: 30,
+      itemBuilder: (index) => ItemTags(
+        index: index,
+        title: _tagItems[index],
+        activeColor: Colors.grey[200],
+        textActiveColor: Colors.black87,
+        borderRadius: BorderRadius.circular(4),
+        elevation: 2,
+        color: Colors.green,
+      ),
+    );
   }
 
   ListTile _sectionButton(String title) {
@@ -102,6 +113,41 @@ class SharePostScreen extends StatelessWidget {
         decoration: InputDecoration(
             hintText: "Write a caption...", border: InputBorder.none),
       ),
+    );
+  }
+}
+
+class SectionSwitch extends StatefulWidget {
+  final String _title;
+
+  const SectionSwitch(
+    this._title, {
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _SectionSwitchState createState() => _SectionSwitchState();
+}
+
+class _SectionSwitchState extends State<SectionSwitch> {
+  bool checked = false;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        widget._title,
+        style: TextStyle(fontWeight: FontWeight.w500),
+      ),
+      trailing: CupertinoSwitch(
+        onChanged: (onValue) {
+          setState(() {
+            checked = onValue;
+          });
+        },
+        value: checked,
+      ),
+      dense: true,
+      contentPadding: EdgeInsets.symmetric(horizontal: common_gap),
     );
   }
 }
