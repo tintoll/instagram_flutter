@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
 import 'package:instagram_flutter/constants/screen_size.dart';
+import 'package:instagram_flutter/repo/image_network_repository.dart';
+import 'package:instagram_flutter/widgets/my_progress_indicator.dart';
 
 class SharePostScreen extends StatelessWidget {
   final File imageFile;
@@ -35,7 +37,18 @@ class SharePostScreen extends StatelessWidget {
           title: Text("New Post"),
           actions: [
             FlatButton(
-                onPressed: () {},
+                onPressed: () async {
+                  // 프로세스 화면 보여주기
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (_) => MyProgressIndicator(),
+                      isDismissible: false,
+                      enableDrag: false);
+                  await imageNetworkRepository
+                      .uploadImageNCreateNewPost(imageFile);
+                  // 프로세스 화면 숨기기
+                  Navigator.of(context).pop();
+                },
                 child: Text(
                   "Share",
                   textScaleFactor: 1.4,
@@ -51,7 +64,9 @@ class SharePostScreen extends StatelessWidget {
             _divider,
             _sectionButton('Add Location'),
             _tags(),
-            SizedBox(height: common_s_gap,),
+            SizedBox(
+              height: common_s_gap,
+            ),
             _divider,
             SectionSwitch('Facebook'),
             SectionSwitch('Instagrams'),
@@ -131,6 +146,7 @@ class SectionSwitch extends StatefulWidget {
 
 class _SectionSwitchState extends State<SectionSwitch> {
   bool checked = false;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
