@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
 import 'package:instagram_flutter/constants/screen_size.dart';
+import 'package:instagram_flutter/repo/image_network_repository.dart';
 import 'package:instagram_flutter/widgets/comment.dart';
 import 'package:instagram_flutter/widgets/my_progress_indicator.dart';
 import 'package:instagram_flutter/widgets/rounded_avatar.dart';
@@ -99,24 +100,35 @@ class Post extends StatelessWidget {
     );
   }
 
-  CachedNetworkImage _postImage() {
-    return CachedNetworkImage(
-      placeholder: (BuildContext context, String url) {
-        return MyProgressIndicator(
+  Widget _postImage() {
+    return FutureBuilder<String>(
+      future: imageNetworkRepository.getPostImageUrl("1609879337596444_ecfJx67Eo2Uz62zN4Ok0lTjbhZo1"),
+      builder: (context, snapshot) {
+        var myProgressIndicator = MyProgressIndicator(
           containerSize: size.width,
         );
-      },
-      imageUrl: 'https://picsum.photos/id/$index/1000/1000',
-      imageBuilder: (BuildContext context, ImageProvider imageProvider) {
-        return AspectRatio(
-          aspectRatio: 1,
-          child: Container(
-            decoration: BoxDecoration(
-                image:
-                    DecorationImage(image: imageProvider, fit: BoxFit.cover)),
-          ),
-        );
-      },
+        if(snapshot.hasData) {
+          return CachedNetworkImage(
+            placeholder: (BuildContext context, String url) {
+              return myProgressIndicator;
+            },
+            imageUrl: snapshot.data.toString(),
+            imageBuilder: (BuildContext context, ImageProvider imageProvider) {
+              return AspectRatio(
+                aspectRatio: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                      image:
+                      DecorationImage(image: imageProvider, fit: BoxFit.cover)),
+                ),
+              );
+            },
+          );
+        } else {
+          return myProgressIndicator;
+        }
+
+      }
     );
   }
 }

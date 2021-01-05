@@ -20,6 +20,10 @@ class ImageNetworkRepository {
   }
 
   String _getImagePathByPostKey(String postKey) => 'post/$postKey/post.jpg';
+
+  Future<String> getPostImageUrl(String postKey) {
+    return FirebaseStorage.instance.ref().child(_getImagePathByPostKey(postKey)).getDownloadURL();
+  }
 }
 
 
