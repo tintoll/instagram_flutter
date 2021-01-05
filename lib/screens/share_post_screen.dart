@@ -45,7 +45,7 @@ class SharePostScreen extends StatelessWidget {
                       isDismissible: false,
                       enableDrag: false);
                   await imageNetworkRepository
-                      .uploadImageNCreateNewPost(imageFile);
+                      .uploadImageNCreateNewPost(imageFile, postKey: postKey);
                   // 프로세스 화면 숨기기
                   Navigator.of(context).pop();
                 },
