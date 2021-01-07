@@ -102,7 +102,7 @@ class Post extends StatelessWidget {
 
   Widget _postImage() {
     return FutureBuilder<String>(
-      future: imageNetworkRepository.getPostImageUrl("1609879337596444_ecfJx67Eo2Uz62zN4Ok0lTjbhZo1"),
+      future: imageNetworkRepository.getPostImageUrl("1610051547342297_ecfJx67Eo2Uz62zN4Ok0lTjbhZo1"),
       builder: (context, snapshot) {
         var myProgressIndicator = MyProgressIndicator(
           containerSize: size.width,
