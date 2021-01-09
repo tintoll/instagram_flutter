@@ -6,7 +6,7 @@ import 'package:instagram_flutter/repo/user_network_repository.dart';
 import 'package:instagram_flutter/utils/simple_snackbar.dart';
 
 class FirebaseAuthState extends ChangeNotifier {
-  FirebaseAuthStatus _firebaseAuthStatus = FirebaseAuthStatus.progress;
+  FirebaseAuthStatus _firebaseAuthStatus = FirebaseAuthStatus.signout;
   User _firebaseUser;
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FacebookLogin _facebookLogin;
@@ -144,11 +144,12 @@ class FirebaseAuthState extends ChangeNotifier {
         FacebookAuthProvider.credential(token);
     final UserCredential userCredential =
         await _firebaseAuth.signInWithCredential(authCredential);
-    final User user = userCredential.user;
-    if (user == null) {
+    final User user =
+    _firebaseUser = userCredential.user;
+    if (_firebaseUser == null) {
       simpleSnackbar(context, '페북 로그인 실패');
     } else {
-      _firebaseUser = user;
+      await userNetworkRepository.attemptCreateUser(userKey: _firebaseUser.uid, email: _firebaseUser.email);
     }
 
     notifyListeners();

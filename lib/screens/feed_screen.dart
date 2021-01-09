@@ -33,9 +33,6 @@ class FeedScreen extends StatelessWidget {
                     color: Colors.black87,
                   ),
                   onPressed: () {
-                    userNetworkRepository.getUsersWithoutMe().listen((user) {
-                      print(user);
-                    });
                   }),
             ],
           )),
