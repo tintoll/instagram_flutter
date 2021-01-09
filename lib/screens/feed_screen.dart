@@ -32,7 +32,11 @@ class FeedScreen extends StatelessWidget {
                     AssetImage('assets/images/direct_message.png'),
                     color: Colors.black87,
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    userNetworkRepository.getUsersWithoutMe().listen((user) {
+                      print(user);
+                    });
+                  }),
             ],
           )),
       body: ListView.builder(

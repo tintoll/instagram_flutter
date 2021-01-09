@@ -6,7 +6,7 @@ import 'package:instagram_flutter/repo/helper/transformers.dart';
 class UserNetworkRepository with Transformers {
   Future<void> attemptCreateUser({String userKey, String email}) async {
     final DocumentReference docRef =
-        FirebaseFirestore.instance.collection(CONLLECTION_USERS).doc(userKey);
+    FirebaseFirestore.instance.collection(CONLLECTION_USERS).doc(userKey);
     DocumentSnapshot documentSnapshot = await docRef.get();
     if (!documentSnapshot.exists) {
       return await docRef.set(UserModel.getMapForCreateUser(email));
@@ -19,6 +19,12 @@ class UserNetworkRepository with Transformers {
         .doc(userKey)
         .snapshots().transform(toUser);
   }
+
+  Stream<List<UserModel>> getUsersWithoutMe() {
+    return FirebaseFirestore.instance
+        .collection(CONLLECTION_USERS).snapshots().transform(toUsersExceptMe);
+  }
 }
+
 
 UserNetworkRepository userNetworkRepository = UserNetworkRepository();
