@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:instagram_flutter/models/firestore/post_model.dart';
 import 'package:instagram_flutter/models/firestore/user_model.dart';
 
 class Transformers {
@@ -22,5 +23,32 @@ class Transformers {
             users.add(UserModel.fromSnapshot(documentSnapshot));
         });
         sink.add(users);
+      });
+  final toPosts = StreamTransformer<QuerySnapshot,
+      List<PostModel>>.fromHandlers(
+      handleData: (snapshot, sink) async {
+        List<PostModel> posts = [];
+        snapshot.docs.forEach((documentSnapshot) {
+          posts.add(PostModel.fromSnapshot(documentSnapshot));
+        });
+        sink.add(posts);
+      });
+
+  final latestToTop = StreamTransformer<List<PostModel>,
+      List<PostModel>>.fromHandlers(
+      handleData: (posts, sink) async {
+        // 최신글순으로 정렬
+        posts.sort((a,b) => b.postTime.compareTo(a.postTime));
+        sink.add(posts);
+      });
+
+  final combineListOfPosts = StreamTransformer<List<List<PostModel>>,
+      List<PostModel>>.fromHandlers(
+      handleData: (listOfPosts, sink) async {
+        List<PostModel> posts = [];
+        for(final postList in listOfPosts) {
+          posts.addAll(postList);
+        }
+        sink.add(posts);
       });
 }
