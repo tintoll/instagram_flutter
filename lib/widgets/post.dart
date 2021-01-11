@@ -2,22 +2,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/constants/common_size.dart';
 import 'package:instagram_flutter/constants/screen_size.dart';
+import 'package:instagram_flutter/models/firestore/post_model.dart';
 import 'package:instagram_flutter/repo/image_network_repository.dart';
 import 'package:instagram_flutter/widgets/comment.dart';
 import 'package:instagram_flutter/widgets/my_progress_indicator.dart';
 import 'package:instagram_flutter/widgets/rounded_avatar.dart';
 
 class Post extends StatelessWidget {
-  final int index;
+  final PostModel postModel;
 
   Post(
-    this.index, {
+    this.postModel, {
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -26,6 +26,7 @@ class Post extends StatelessWidget {
         _postActions(),
         _postLikes(),
         _postCaption(),
+        _lastComment()
       ],
     );
   }
@@ -36,8 +37,19 @@ class Post extends StatelessWidget {
           horizontal: common_gap, vertical: common_xxs_gap),
       child: Comment(
         showImage: false,
-        username: 'testingUser',
-        text: 'I have a lot of money!!',
+        username: postModel.username,
+        text: postModel.caption,
+      ),
+    );
+  }
+  Widget _lastComment() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          horizontal: common_gap, vertical: common_xxs_gap),
+      child: Comment(
+        showImage: false,
+        username: postModel.lastCommentor,
+        text: postModel.lastComment,
       ),
     );
   }
@@ -46,7 +58,7 @@ class Post extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.only(left: common_gap),
         child: Text(
-          '12000 likes',
+          '${postModel.numOfLikes == null ? 0 : postModel.numOfLikes.length} likes',
           style: TextStyle(fontWeight: FontWeight.bold),
         ));
   }
@@ -89,7 +101,7 @@ class Post extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.all(common_xxs_gap),
             child: RoundedAvatar()),
-        Expanded(child: Text('username')),
+        Expanded(child: Text(postModel.username)),
         IconButton(
             icon: Icon(
               Icons.more_vert,
@@ -101,34 +113,25 @@ class Post extends StatelessWidget {
   }
 
   Widget _postImage() {
-    return FutureBuilder<String>(
-      future: imageNetworkRepository.getPostImageUrl("1610051547342297_ecfJx67Eo2Uz62zN4Ok0lTjbhZo1"),
-      builder: (context, snapshot) {
-        var myProgressIndicator = MyProgressIndicator(
-          containerSize: size.width,
-        );
-        if(snapshot.hasData) {
-          return CachedNetworkImage(
-            placeholder: (BuildContext context, String url) {
-              return myProgressIndicator;
-            },
-            imageUrl: snapshot.data.toString(),
-            imageBuilder: (BuildContext context, ImageProvider imageProvider) {
-              return AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                      image:
-                      DecorationImage(image: imageProvider, fit: BoxFit.cover)),
-                ),
-              );
-            },
-          );
-        } else {
-          return myProgressIndicator;
-        }
+    var myProgressIndicator = MyProgressIndicator(
+      containerSize: size.width,
+    );
 
-      }
+    return CachedNetworkImage(
+      placeholder: (BuildContext context, String url) {
+        return myProgressIndicator;
+      },
+      imageUrl: postModel.postImg,
+      imageBuilder: (BuildContext context, ImageProvider imageProvider) {
+        return AspectRatio(
+          aspectRatio: 1,
+          child: Container(
+            decoration: BoxDecoration(
+                image:
+                    DecorationImage(image: imageProvider, fit: BoxFit.cover)),
+          ),
+        );
+      },
     );
   }
 }
