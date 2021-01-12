@@ -8,10 +8,10 @@ class PostNetworkRepository with Transformers {
   Future<Map<String, dynamic>> createNewPost(
       String postKey, Map<String, dynamic> postData) async {
     final DocumentReference postRef =
-        FirebaseFirestore.instance.collection(CONLLECTION_POSTS).doc(postKey);
+        FirebaseFirestore.instance.collection(COLLECTION_POSTS).doc(postKey);
     final DocumentSnapshot postSnapshot = await postRef.get();
     final DocumentReference userRef = FirebaseFirestore.instance
-        .collection(CONLLECTION_USERS)
+        .collection(COLLECTION_USERS)
         .doc(postData[KEY_USERKEY]);
 
     FirebaseFirestore.instance.runTransaction((tx) async {
@@ -26,7 +26,7 @@ class PostNetworkRepository with Transformers {
 
   Future<void> updatePostImgUrl({String postImg, String postKey}) async {
     final DocumentReference postRef =
-        FirebaseFirestore.instance.collection(CONLLECTION_POSTS).doc(postKey);
+        FirebaseFirestore.instance.collection(COLLECTION_POSTS).doc(postKey);
     final DocumentSnapshot postSnapshot = await postRef.get();
     if (postSnapshot.exists) {
       postRef.update({KEY_POSTIMG: postImg});
@@ -35,7 +35,7 @@ class PostNetworkRepository with Transformers {
 
   Stream<List<PostModel>> getPostsFromSpecificUser(String userKey) {
     return FirebaseFirestore.instance
-        .collection(CONLLECTION_POSTS)
+        .collection(COLLECTION_POSTS)
         .where(KEY_USERKEY, isEqualTo: userKey)
         .snapshots()
         .transform(toPosts);
@@ -43,7 +43,7 @@ class PostNetworkRepository with Transformers {
 
   Stream<List<PostModel>> fetchPostsFromAllFollowings(List<dynamic> followings) {
     final CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection(CONLLECTION_POSTS);
+        FirebaseFirestore.instance.collection(COLLECTION_POSTS);
     List<Stream<List<PostModel>>> streams = [];
 
     for (final following in followings) {
