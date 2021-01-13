@@ -37,3 +37,6 @@ class CommentNetworkRepository with Transformers {
         .transform(toComments);
   }
 }
+
+
+CommentNetworkRepository commentNetworkRepository = CommentNetworkRepository();
