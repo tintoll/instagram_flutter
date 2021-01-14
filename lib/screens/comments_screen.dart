@@ -25,6 +25,9 @@ class _CommentsScreenState extends State<CommentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Comments'),
+      ),
       body: Form(
         key: _globalKey,
         child: Column(
@@ -38,11 +41,14 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     Widget child) {
                   return ListView.separated(
                     itemBuilder: (context, index) {
-                      return Comment(
-                        username: comments[index].username,
-                        text: comments[index].comment,
-                        dateTime: comments[index].commentTime,
-                        showImage: true,);
+                      return Padding(
+                        padding: const EdgeInsets.all(common_gap),
+                        child: Comment(
+                          username: comments[index].username,
+                          text: comments[index].comment,
+                          dateTime: comments[index].commentTime,
+                          showImage: true,),
+                      );
                     },
                     separatorBuilder: (context, index) {
                       return SizedBox(height: common_s_gap,);

@@ -15,7 +15,9 @@ class CommentNetworkRepository with Transformers {
 
     return FirebaseFirestore.instance.runTransaction((tx) async {
       if (postSnapshot.exists) {
-        tx.update(commentRef, commentData);
+        // 처음 추가일때는 set
+        tx.set(commentRef, commentData);
+        // 수정 일때는 update
         int numOfComments = postSnapshot.get(KEY_NUMOFCOMMENTS);
         tx.update(postRef, {
           KEY_NUMOFCOMMENTS: numOfComments + 1,
