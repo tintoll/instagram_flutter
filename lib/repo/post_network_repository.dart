@@ -41,7 +41,8 @@ class PostNetworkRepository with Transformers {
         .transform(toPosts);
   }
 
-  Stream<List<PostModel>> fetchPostsFromAllFollowings(List<dynamic> followings) {
+  Stream<List<PostModel>> fetchPostsFromAllFollowings(
+      List<dynamic> followings) {
     final CollectionReference collectionReference =
         FirebaseFirestore.instance.collection(COLLECTION_POSTS);
     List<Stream<List<PostModel>>> streams = [];
@@ -53,7 +54,25 @@ class PostNetworkRepository with Transformers {
           .transform(toPosts));
     }
 
-    return CombineLatestStream.list<List<PostModel>>(streams).transform(combineListOfPosts);
+    return CombineLatestStream.list<List<PostModel>>(streams)
+        .transform(combineListOfPosts);
+  }
+
+  Future<void> toggleLike(String postKey, String userKey) async {
+    final DocumentReference postRef =
+        FirebaseFirestore.instance.collection(COLLECTION_POSTS).doc(postKey);
+    final DocumentSnapshot postSnapshot = await postRef.get();
+    if (postSnapshot.exists) {
+      if (postSnapshot.get(KEY_NUMOFLIKES).contains(userKey)) {
+        postRef.update({
+          KEY_NUMOFLIKES: FieldValue.arrayRemove([userKey])
+        });
+      } else {
+        postRef.update({
+          KEY_NUMOFLIKES: FieldValue.arrayUnion([userKey])
+        });
+      }
+    }
   }
 }
 
