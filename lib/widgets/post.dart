@@ -27,7 +27,8 @@ class Post extends StatelessWidget {
         _postActions(context),
         _postLikes(),
         _postCaption(),
-        _lastComment()
+        _lastComment(),
+        _moreComments(context)
       ],
     );
   }
@@ -79,9 +80,7 @@ class Post extends StatelessWidget {
               color: Colors.black87,
             ),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                return CommentsScreen(postModel.postKey);
-              }));
+              _goToComments(context);
             }),
         IconButton(
             icon: ImageIcon(
@@ -138,5 +137,28 @@ class Post extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _moreComments(BuildContext context) {
+    return Visibility(
+      visible: (postModel.numOfComments != null && postModel.numOfComments >= 2),
+      child: GestureDetector(
+        onTap: () {
+          _goToComments(context);
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: common_gap),
+          child: Text(
+            "${postModel.numOfComments-1} more comments..."
+          ),
+        ),
+      ),
+    );
+  }
+
+  _goToComments(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+      return CommentsScreen(postModel.postKey);
+    }));
   }
 }

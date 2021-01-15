@@ -70,6 +70,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: common_gap),
                     child: TextFormField(
                       controller: _textEditingController,
+                      autofocus: true,
                       cursorColor: Colors.black54,
                       validator: (String value) {
                         if (value.isEmpty) {
