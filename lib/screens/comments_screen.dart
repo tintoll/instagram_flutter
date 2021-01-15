@@ -40,6 +40,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     (BuildContext context, List<CommentModel> comments,
                     Widget child) {
                   return ListView.separated(
+                    reverse: true,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(common_gap),
